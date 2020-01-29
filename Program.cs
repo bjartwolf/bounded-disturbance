@@ -41,7 +41,7 @@ namespace bounded_disturbance
         {
             var chaosPolicy = MonkeyPolicy.InjectLatencyAsync(with =>
                 with.Latency(TimeSpan.FromSeconds(10))
-                    .InjectionRate(0.01)
+                    .InjectionRate(0.02)
                     .Enabled(true)); 
 
             var foo = new List<Task<HttpResponseMessage>>();
@@ -58,13 +58,13 @@ namespace bounded_disturbance
         {
             var chaosPolicy = MonkeyPolicy.InjectLatencyAsync(with =>
                 with.Latency(TimeSpan.FromSeconds(10))
-                    .InjectionRate(0.01)
+                    .InjectionRate(0.02)
                     .Enabled(true));
 
             var timeoutPolicy = Policy.TimeoutAsync(TimeSpan.FromMilliseconds(150));
 
-            var retry = Policy.Handle<TimeoutException>().RetryAsync(3);
-            var policy = Policy.WrapAsync( retry, timeoutPolicy, chaosPolicy);
+            var retry = Policy.Handle<Exception>().RetryAsync(3);
+            var policy = Policy.WrapAsync(  retry, timeoutPolicy, chaosPolicy);
 
             var foo = new List<Task<HttpResponseMessage>>();
             for (int i = 0; i < 10; i++)
