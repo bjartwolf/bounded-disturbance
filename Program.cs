@@ -16,7 +16,7 @@ namespace bounded_disturbance
     public class NominalSystem
     {
         private HttpClient _client;
-        private Uri _psapiUrl = new Uri(@"https://psapi-preprod.nrk.no/playback/manifest/channel/nrk1");
+        private Uri _psapiUrl = new Uri(@"https://someuri");
 
         [GlobalSetup]
         public void Setup()
